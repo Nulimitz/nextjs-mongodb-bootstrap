@@ -2,7 +2,6 @@ import { getSession, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
-import { getUserByEmail } from "../utils/db";
 
 export default function Profile({
   user: { name, email, image, role, accounts },
@@ -110,12 +109,10 @@ export default function Profile({
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const user = await getUserByEmail(session.user.email);
 
   return {
     props: {
       session,
-      user: JSON.parse(JSON.stringify(user)),
     },
   };
 }
